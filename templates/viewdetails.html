@@ -1,0 +1,135 @@
+{% extends 'stu_home.html' %}
+{% block content %}
+<style>
+    .video-fluid {
+        width: 100%;
+        height: auto;
+      }
+      .left{
+          float: left;
+          width: 49%;
+      }
+      .right{
+        float: left;
+        width: 49%;
+    }
+    .w3-button{
+        text-decoration: none;
+    }
+</style>
+<script>
+  function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.firstElementChild.className += " w3-border-red";
+  }
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="w3-container">
+      <div class="w3-card-4" style="width:100%">
+             <header class="w3-container w3-light-blue">
+                 <h3>{{document.title}}</h3>Version : {{document.version}}<br>
+                 Created At : {{document.created_at}}<br>
+                 Updated At : {{document.updated_at}}
+                 <p>Description : {{document.description}}</p>
+             </header>
+             
+      </div>
+</div><br><br>
+
+<div class="w3-container">
+    <div class="w3-card-4" style="width:100%">
+      <header class="w3-container w3-light-green">
+        <h3>{{i.ansdata}}</h3>
+      </header>
+        <p>{{document.content | safe}}</p><br>
+        
+      </div>
+      {% if user.profile.acc_type == 'participent' %}
+      {% if statusID.status == 'signed' and datediff == 0 %}
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'revoke' id=document.id %}">Revoke Consent</a>
+      {% elif statusID.status == 'signed' %}
+      {% elif statusID.status == 'declined' and datediff == 0 %}
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'revoke' id=document.id %}">Revoke Consent</a>
+      {% elif statusID.status == 'declined' %}
+      {% elif statusID.status == 'pending' %}
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'sign' id=document.id %}">Sign Document</a>
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'decline' id=document.id %}">Decline Document</a>
+      {% else %}
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'sign' id=document.id %}">Sign Document</a>
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'decline' id=document.id %}">Decline Document</a>
+      <a style="width:100%" class="w3-button w3-block w3-dark-grey" href="{% url 'draft' id=document.id %}">Send to Draft</a>
+      {% endif %}
+      {% else %}
+      <br><br>
+      <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openCity(event, 'Signed');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Signed</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'Declined');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Declined</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'Pending');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Pending</div>
+        </a>
+      </div>
+    
+      <div id="Signed" class="w3-container city" style="display:none">
+        <h2>Signed</h2>
+        <table class="w3-table-all w3-card-4">
+          <tr>
+            <th>Participent Name</th>
+            <th>Signed At</th>
+          </tr>
+          {% for i in signed_users %}
+          <tr>
+            <td> <a href="{% url 'viewparticipent' id=i.user.id %}" > {{i.user.first_name}} {{i.user.last_name}} </a></td>
+            <td> <a> {{i.signed_at}}  </a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    
+      <div id="Declined" class="w3-container city" style="display:none">
+        <h2>Declined</h2>
+        <table class="w3-table-all w3-card-4">
+          <tr>
+            <th>Participent Name</th>
+            <th>Signed At</th>
+          </tr>
+          {% for i in declined_users %}
+          <tr>
+            <td> <a href="{% url 'viewparticipent' id=i.user.id %}" > {{i.user.first_name}} {{i.user.last_name}} </a></td>
+            <td> <a> {{i.signed_at}}  </a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    
+      <div id="Pending" class="w3-container city" style="display:none">
+        <h2>Pending</h2>
+        <table class="w3-table-all w3-card-4">
+          <tr>
+            <th>Participent Name</th>
+          </tr>
+          {% for i in pending_users %}
+          <tr>
+            <td> <a href="{% url 'viewparticipent' id=i.id %}" > {{i.first_name}} {{i.last_name}} </a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+    </div>
+    <br><br>
+  </div><br>
+{% endblock %}

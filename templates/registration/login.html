@@ -1,0 +1,34 @@
+
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<style>
+  .asteriskField{
+    display: none;
+  }
+  .requiredField{
+    color:cornsilk;
+  }
+  header{
+    height: 100vh;
+    background-image: url("{% static 'login.jpg' %}");
+    background-attachment: fixed;
+    background-size: cover;
+  }
+</style>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<body>
+  <header>
+<small align="center" style="color:black;">l</small>
+<form method="POST" enctype="multipart/form-data" style='width:500px;margin:auto;margin-top:300px;'>
+    {% csrf_token %}
+    <h1 align='center' style="color:cornsilk;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">Login</h1>
+    {{form|crispy}}
+    <input type="submit" value="Login" class="btn btn-primary">&nbsp;<a href="password-reset">forget password</a><br>
+    <p style="color: cornsilk;">Don't have an account <a href="{% url 'signup' %}">sign up</a></p>
+</form>
+</header>
+</body>
+{% endblock %}

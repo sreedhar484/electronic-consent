@@ -1,0 +1,120 @@
+{% load static %}
+<html>
+    <head>
+        <title>e-consent</title>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+            }
+            .header{
+                height: auto;
+                background-color: black;
+            }
+            .navbar-style{
+                box-shadow: 0 5px 10px;
+            }
+            .logo{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border:1px solid blue;
+            }
+            .icon-bar{
+                background: darkorange;
+            }
+            b{
+                color: red;
+            }
+            .video-fluid {
+                width: 100%;
+                height: auto;
+              }
+              .left{
+                  float: left;
+                  width: 49%;
+              }
+              .right{
+                float: left;
+                width: 49%;
+            }
+            .w3-button{
+                text-decoration: none;
+            }
+            
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href='https://unpkg.com/aos@2.3.0/dist/aos.css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src='https://unpkg.com/aos@2.3.0/dist/aos.js'></script>
+        <script>
+            window.onscroll = function() {myFunction()};
+            
+            var navbar = document.getElementById("navbar");
+            var sticky = navbar.offsetTop;
+            
+            function myFunction() {
+              if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+              } else {
+                navbar.classList.remove("sticky");
+              }
+            }
+            </script>
+    </head>
+    <body>
+        
+        <header  class="header">
+            <nav class="navbar navbar-style">
+                <a class="navbar-brand" href="{% url 'log' %}">e - Consent</a>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle='collapse' data-target='#micon'>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                            <a href="{% url 'log' %}"><img class='logo' src="{{user.profile.photo.url }}"></a>
+                        <a href=""><img ></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="micon">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'log' %}">Dashboard</a></li>
+                        {% if user.profile.acc_type == "participent" %}
+                        <li><a href="{% url 'signeddoc' %}">Signed Documents</a></li>
+                        <li><a href="{% url 'pendingdoc' %}">Pending Documents</a></li>
+                        <li><a href="{% url 'declineddoc' %}">Declined Documents</a></li>
+                        <li><a href="{% url 'draftdoc' %}">Drafts</a></li>
+                        {% endif %}
+                        {% if user.profile.acc_type == "admin" %}
+                        <li><a href="{% url 'createdoc' %}" >Create document</a></li>
+                        <li><a href="{% url 'alldoc' %}" >All Documents</a></li>
+                        <li><a href="{% url 'allparticipents' %}">All Participents</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'feedback' %}" >Feedback</a></li>
+                        <li><form class='form-inline my-2 my-lg-0'  action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button class='btn btn-outline-success my-2 my-sm-0' type="submit">Logout</button>
+                        </form></li>
+                        {% comment %} <li><form class='form-inline' action="search" method="POST" enctype="multipart/form-data>">{% csrf_token %}<input type="search" name="srh" class="form-control mr-sm-2" placeholder="search" aria-label="search">
+                            <input class='btn btn-light my-sm-0' type="submit" value="search"></form>{% for i in messages %}<b>{{i}}</b>{% endfor %}</li> {% endcomment %}
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <footer class="footer">
+            {% block content %}
+
+            {% endblock %}
+        </footer>
+        <script>
+            AOS.init({duration:1200,})
+          </script>
+    </body>
+</html>

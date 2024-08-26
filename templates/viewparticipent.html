@@ -1,0 +1,121 @@
+{% extends 'stu_home.html' %}
+{% block content %}
+<style>
+    .video-fluid {
+        width: 100%;
+        height: auto;
+      }
+      .left{
+          float: left;
+          width: 49%;
+      }
+      .right{
+        float: left;
+        width: 49%;
+    }
+    .w3-button{
+        text-decoration: none;
+    }
+</style>
+<script>
+  function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.firstElementChild.className += " w3-border-red";
+  }
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="w3-container">
+      <div class="w3-card-4" style="width:100%">
+             <header class="w3-container w3-light-blue">
+                 <h3>{{userDetails.first_name}} {{userDetails.last_name}}</h3>
+                 <p>Email : {{userDetails.email}}</p>
+                 <p>About : {{userDetails.profile.bio}}
+                 <p>No.of Documents Signed : {{signed_doc | length}}</p>
+                 <p>No.of Documents Declined : {{declined_doc | length}}</p>
+                 <p>No.of Documents Pending : {{pending_doc | length}}</p>
+             </header>
+             
+      </div>
+</div><br><br>
+
+<div class="w3-container">
+    <div class="w3-card-4" style="width:100%">
+      <header class="w3-container w3-light-green">
+        <h3>{{i.ansdata}}</h3>
+      </header>
+        <p>{{document.content | safe}}</p><br>
+      </div>
+      {% if user.profile.acc_type == 'admin' %}
+      <br><br>
+      <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openCity(event, 'Signed');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Signed</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'Declined');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Declined</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'Pending');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Pending</div>
+        </a>
+      </div>
+    
+      <div id="Signed" class="w3-container city" style="display:none">
+        <h2>Signed</h2>
+        <table class="w3-table-all w3-card-4">
+            <tr>
+              <th>Document Title</th>
+              <th>Signed At</th>
+            </tr>
+            {% for i in signed_doc %}
+            <tr>
+              <td> <a href="{% url 'viewdetails' id=i.document.id %}" > {{i.document.title}} </a></td>
+              <td> <a> {{i.signed_at}}  </a></td>
+            </tr>
+            {% endfor %}
+          </table>
+      </div>
+    
+      <div id="Declined" class="w3-container city" style="display:none">
+        <h2>Declined</h2>
+        <table class="w3-table-all w3-card-4">
+            <tr>
+              <th>Document Title</th>
+              <th>Signed At</th>
+            </tr>
+            {% for i in declined_doc %}
+            <tr>
+              <td> <a href="{% url 'viewdetails' id=i.document.id %}"> {{i.document.title}} </a></td>
+              <td> <a> {{i.signed_at}} </a></td>
+            </tr>
+            {% endfor %}
+          </table>
+      </div>
+    
+      <div id="Pending" class="w3-container city" style="display:none">
+        <h2>Pending</h2>
+        <table class="w3-table-all w3-card-4">
+            <tr>
+              <th>Document Title</th>
+            </tr>
+            {% for i in pending_doc %}
+            <tr>
+              <td> <a href="{% url 'viewdetails' id=i.id %}" > {{i.title}} </a></td>
+            </tr>
+            {% endfor %}
+          </table>
+      </div>
+      {% endif %}
+    </div>
+    <br><br>
+  </div><br>
+{% endblock %}

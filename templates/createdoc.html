@@ -1,0 +1,17 @@
+{% extends 'stu_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<body>
+<h1 align="center">CREATE DOCUMENT</h1>
+<form method="post" enctype="multipart/form-data" style="padding:1%;">
+  {% for i in messages %}
+  <div class="alert alert-block alert-info">
+      {{i}}
+  </div>
+  {% endfor %}
+    {% csrf_token %}
+    {{form|crispy}}
+    {{form.media}}
+    <input type="submit" value="Post Document" class="btn btn-primary w3-mobile">
+</form>
+{% endblock %}

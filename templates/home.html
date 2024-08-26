@@ -1,0 +1,137 @@
+{% load static %}
+<html>
+    <head>
+        <title>Home</title>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+            }
+            .header{
+                height: auto;
+                background-color: black;
+            }
+            .navbar-style{
+                box-shadow: 0 5px 10px;
+            }
+            .logo{
+                height: 48px;
+                padding: 2px 10px;
+            }
+            .icon-bar{
+                background: darkorange;
+            }
+            .name2{
+                color:black;
+            }
+            footer{
+                height: auto;
+            }
+            .foot1{
+                margin-left: 10px;
+                width: 49%;
+                height: 500px;
+                float: left;
+                border: 1px solid black;
+                border-radius: 15%;
+                background-color: violet;
+            }
+            .postimg{
+                width: 50%;
+                height: 50%;
+                margin-left: 25%;
+                border: 2px solid blue;
+                border-radius: 10%;
+                margin-top: 10px;
+            }
+            .posttitle{
+                text-align: center;
+                color: black;
+            }
+            .postdisc{
+                margin-left: 10%;
+            }
+        </style>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+        <header class="header">
+            <nav class="navbar navbar-style">
+                <a class="navbar-brand" href="#">e-Consent</a>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle='collapse' data-target='#micon'>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="micon">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item"><a class='nav-link' href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class='nav-link' href="signup">Signup</a></li>
+                        <li class="nav-item"><a class='nav-link' href="#">About</a></li>
+                        <li class="nav-item"><a class='nav-link' href="#">Contact</a></li> 
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        {% comment %} <div class="container">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+              </ol>
+          
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+                {% for i in  slide %}
+                {% if forloop.first %}
+                <div class="item active">
+                {% else %}
+                <div class="item">
+                {% endif %}
+                  <img src="{{i.photo.url}}" alt="Los Angeles" style="width:100%;">
+                  <div class="carousel-caption">
+                    <h3>{{i.title}}</h3>
+                    <p>{{i.discription}}</p>
+                  </div>
+                </div>
+                {% endfor %}
+            
+              </div>
+          
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+
+        <footer>
+            <h3 align='center' class="name2">posts</h3>
+              {% for i in posts %}
+                <div class="foot1">
+                    <img class='postimg' src="{{ i.photo.url }}">
+                    <h4 class="posttitle">{{ i.title }}</h4>
+                    <i class="postdisc">{{i.discription }}</i>
+                </div>
+                {% endfor %}
+            </div>
+        </footer> {% endcomment %}
+    </body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'stu_home.html' %}
+{% block content %}
+<form class='form-inline' action="allparticipents" method="POST" enctype="multipart/form-data>" style="margin-left: 16px;width:100%;" data-aos="fade-left">
+  {% csrf_token %}
+  <input type="search" name="srh" class="form-control mr-sm-2" placeholder="Please enter name" aria-label="search" style="width: 70%;border:1px solid cyan;" value='{{src_name}}' required>
+  <input class='btn btn-light my-sm-0' type="submit" value="search" style="width: 28%;background-color:cyan;">
+</form><br><br>
+<p data-aos="fade-left" style="margin-left: 16px;width:70%;">{{str1}}</p>
+{% for i in name %}
+<div class="w3-container" data-aos="fade-left">
+    <div class="w3-card-4" style="width:100%">
+      
+        <header class="w3-container w3-light-blue" data-aos="zoom-in">
+          <div>
+          <h3>{{i.first_name}} {{i.last_name}}</h3>
+          <p>{{i.email}}</p>
+        </div>
+        <div class="w3-container" data-aos="fade-left">
+          <img src='{{i.profile.photo.url }}' alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:100px">
+          <p>{{i.bio}}</p><br>
+        </div>
+        </header>
+    <a  class="w3-button w3-block w3-dark-grey" href="{% url 'viewparticipent' id=i.id %}" >View Details</a>
+    </div>
+    <br><br>
+  </div><br>
+  {% endfor %}
+{% endblock %}
+

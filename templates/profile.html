@@ -1,0 +1,189 @@
+{% extends 'stu_home.html' %}
+{% load static %}
+{% block content %}
+<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body{
+   background-color: #f3f3f3;
+}
+
+.wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 90%;
+  display: flex;
+  box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+}
+
+.wrapper .left{
+  width: 50%;
+  background: linear-gradient(to right,#01a9ac,#01dbdf);
+  padding: 30px 25px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  text-align: center;
+  color: #fff;
+}
+
+.wrapper .left img{
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.wrapper .left h4{
+  margin-bottom: 10px;
+}
+
+.wrapper .left p{
+  font-size: 12px;
+}
+
+.wrapper .right{
+  width: 80%;
+  background: #fff;
+  padding: 30px 25px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.wrapper .right .info,
+.wrapper .right .projects{
+  margin-bottom: 25px;
+}
+
+.wrapper .right .info h3,
+.wrapper .right .projects h3{
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #353c4e;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+.wrapper .right .info_data,
+.wrapper .right .projects_data{
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper .right .info_data .data,
+.wrapper .right .projects_data .data{
+  width: 75%;
+}
+
+.wrapper .right .info_data .data h4,
+.wrapper .right .projects_data .data h4{
+    color: #353c4e;
+    margin-bottom: 5px;
+}
+
+.wrapper .right .info_data .data p,
+.wrapper .right .projects_data .data p{
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #919aa3;
+}
+
+.wrapper .social_media ul{
+  display: flex;
+}
+
+.wrapper .social_media ul li{
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(to right,#01a9ac,#01dbdf);
+  margin-right: 10px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 45px;
+}
+
+.wrapper .social_media ul li a{
+  color :#fff;
+  display: block;
+  font-size: 18px;
+}
+</style>
+<div class="wrapper">
+    <div class="left" data-aos="zoom-in">
+        <img src="{{ user.profile.photo.url }}" alt="user" width="200" height="200">
+        <div data-aos="zoom-in"></div>
+        <h4>{{user.first_name}} {{user.last_name}}</h4>
+        <a href="profile"><i class="fa fa-edit" style="font-size:20px"></i></a>
+    </div>
+    <div class="right" data-aos="fade-left">
+        <div class="info" data-aos="zoom-in">
+            <h3>Information</h3>
+            <div class="info_data">
+                 <div class="data">
+                    <h4>Email</h4>
+                    <p>{{user.email}}</p>
+                 </div>
+                 <div class="data">
+                    {% if user.profile.acc_type == "participent" %}
+                    <h4>No.of Documents Signed</h4>
+                    <p>{{signed_count}}</p>
+                    {% endif %}
+                   {% if user.profile.acc_type == "admin" %}
+                    <h4>No.of Documents Posted</h4>
+                    <p>{{alldoccount}}</p>
+                    {% endif %}
+                    </div>
+             <div class="data">
+              {% if user.profile.acc_type == "participent" %}
+              <h4>No.of Documents Pending</h4>
+              <p>{{pending_count}}</p>
+               {% endif %}
+              {% if user.profile.acc_type == "admin" %}
+              <h4>Recent document posted</h4>
+               <p>{{lastdoc.title}}</p>
+               {% endif %}
+         </div>
+            </div>
+        </div>
+      
+      <div class="projects">
+            <div class="projects_data" data-aos="zoom-in">
+                 <div class="data">
+                  <h4>Username</h4>
+                    <p>{{user.username}}</p>
+                 </div>
+                 <div class="data">
+                  <h4>Last Login</h4>
+                   <p>{{user.last_login}}</p>
+             </div>
+             <div class="data">
+              {% if user.profile.acc_type == "participent" %}
+              <h4>No.of Documents Declined</h4>
+               <p>{{declined_count}}</p>
+               {% endif %}
+              {% if user.profile.acc_type == "admin" %}
+              <h4>No.of Participents responded to recent document</h4>
+               <p>{{lastdocuserscnt}}</p>
+               {% endif %}
+         </div>
+            </div>
+        </div>
+      
+        <div class="social_media">
+            <div class="data">
+                <h4>About</h4>
+                 <p>{{user.profile.bio}}</p>
+           </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
